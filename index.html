@@ -153,6 +153,34 @@ nav a:hover,nav a.active{color:var(--gold);}
 [dir="rtl"] .view-btn{font-family:'Tajawal',sans-serif;letter-spacing:0;font-size:10px;}
 .view-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
 
+/* ── DETAIL PAGE ── */
+#page-detail{background:var(--bg);padding-top:66px;min-height:100vh;}
+.detail-wrap{max-width:1000px;margin:0 auto;padding:60px 40px 100px;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text3);cursor:pointer;background:none;border:none;margin-bottom:50px;transition:color 0.3s;font-family:'Jost',sans-serif;}
+[dir="rtl"] .back-btn{font-family:'Tajawal',sans-serif;letter-spacing:0;flex-direction:row-reverse;}
+.back-btn:hover{color:var(--gold);}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.detail-img{height:480px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.detail-img img{width:100%;height:100%;object-fit:cover;}
+.detail-cat{font-size:9px;letter-spacing:0.45em;text-transform:uppercase;color:var(--gold);opacity:0.65;margin-bottom:12px;}
+.detail-name{font-family:'Cinzel',serif;font-size:clamp(26px,4vw,42px);font-weight:400;letter-spacing:0.06em;color:var(--cream);line-height:1.2;margin-bottom:14px;}
+[dir="rtl"] .detail-name{font-family:'Tajawal',sans-serif;font-weight:700;letter-spacing:0;}
+.detail-price{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:44px;color:var(--gold);margin-bottom:24px;}
+[dir="rtl"] .detail-price{font-family:'Tajawal',sans-serif;font-style:normal;font-weight:700;}
+.detail-price sup{font-size:16px;font-style:normal;opacity:0.65;font-family:'Jost',sans-serif;}
+.detail-divider{height:1px;background:var(--border);margin-bottom:22px;}
+.detail-bio{font-size:14.5px;line-height:1.95;color:var(--text2);margin-bottom:26px;}
+.detail-section-label{font-size:9px;letter-spacing:0.35em;text-transform:uppercase;color:var(--gold);opacity:0.6;margin-bottom:12px;}
+.detail-notes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px;}
+.detail-specs{margin-bottom:28px;}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.spec-key{color:var(--text3);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;}
+.spec-val{color:var(--text);font-weight:400;}
+.whatsapp-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:17px;background:#25D366;color:#fff;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:background 0.3s,transform 0.2s;margin-top:8px;border-radius:2px;}
+[dir="rtl"] .whatsapp-btn{font-family:'Tajawal',sans-serif;letter-spacing:0;font-size:14px;flex-direction:row-reverse;}
+.whatsapp-btn:hover{background:#1ebe5d;transform:translateY(-2px);}
+.whatsapp-btn svg{width:22px;height:22px;fill:#fff;flex-shrink:0;}
+
 /* ── FAQ SECTION ── */
 .faq-section{padding:60px 36px;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .faq-inner{max-width:800px;margin:0 auto;}
@@ -266,6 +294,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 36p
   .modal-content{max-width:90vw;}
   .reviews-header{flex-direction:column;}
   .review-badge-group{width:100%;}
+  .detail-grid{grid-template-columns:1fr;gap:36px;}
+  .detail-wrap{padding:40px 20px 80px;}
 }
 @media(max-width:500px){
   .products-grid{grid-template-columns:1fr;}
@@ -274,6 +304,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 36p
   .carousel-btn{width:28px;height:28px;font-size:14px;}
   .modal-header{padding:20px;}
   .modal-body{padding:16px;}
+  .detail-img{height:300px;}
 }
 </style>
 </head>
@@ -438,6 +469,35 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 36p
   </div>
 </div>
 
+<!-- ══ PRODUCT DETAIL PAGE ══ -->
+<div id="page-detail" class="page">
+  <div class="detail-wrap">
+    <button class="back-btn" onclick="goBackFromDetail()">
+      <span id="backArrow">←</span>
+      <span data-en="Back to Collection" data-ar="العودة للمجموعة">Back to Collection</span>
+    </button>
+    <div class="detail-grid">
+      <div class="detail-img" id="detailImg"><div class="bottle" id="detailBottle"></div></div>
+      <div class="detail-info">
+        <p class="detail-cat" id="detailCat"></p>
+        <h1 class="detail-name" id="detailName"></h1>
+        <div class="detail-price" id="detailPrice"></div>
+        <div class="detail-divider"></div>
+        <p class="detail-bio" id="detailBio"></p>
+        <a id="detailWhatsApp" href="#" target="_blank" class="whatsapp-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="12" fill="#25D366"/><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span data-en="Buy on WhatsApp" data-ar="اشتر عبر واتساب">Buy on WhatsApp</span>
+        </a>
+        <div style="height:18px;"></div>
+        <p class="detail-section-label" data-en="Fragrance Notes" data-ar="مكونات العطر">Fragrance Notes</p>
+        <div class="detail-notes" id="detailNotes"></div>
+        <p class="detail-section-label" data-en="Details" data-ar="التفاصيل">Details</p>
+        <div class="detail-specs" id="detailSpecs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ PAYMENT PAGE ══ -->
 <div id="page-payment" class="page">
   <div class="payment-page-hero">
@@ -578,16 +638,17 @@ const WHATSAPP_NUMBER = '971552836936';
 let currentLang = 'en';
 let currentReviewIndex = 0;
 let reviewAutoplayInterval = null;
+let detailFromPage = 'home';
 
 const products = [
-  {id:1,category:{en:'Oriental · Woody',ar:'شرقي · خشبي'},name:{en:'Amber Nuit',ar:'عنبر نويت'},price:350,badge:{en:'Bestseller',ar:'الأكثر مبيعاً'},bio:{en:'A deeply sensual oriental composition that opens with the warmth of golden amber, journeys through precious sandalwood, and settles into a lingering trail of vanilla and soft smoke.',ar:'تركيبة شرقية حسية عميقة تنفتح بدفء العنبر الذهبي، وتمر عبر خشب الصندل الثمين، لتستقر في ذيل من الفانيليا والدخان الناعم.'},notes:{en:['Amber','Sandalwood','Vanilla','Smoke'],ar:['عنبر','صندل','فانيليا','دخان']},bottleColor:'rgba(180,120,30,0.35)'},
-  {id:2,category:{en:'Fresh · Floral',ar:'منعش · زهري'},name:{en:'Brise Blanc',ar:'بريز بلان'},price:280,badge:null,bio:{en:'A breath of fresh air captured in a bottle. Brise Blanc combines the freshness of an ocean breeze with delicate white florals and a clean, soft musk base.',ar:'نفس من الهواء المنعش محبوس في زجاجة. يجمع بريز بلان بين انتعاش نسيم المحيط وأزهار بيضاء رقيقة.'},notes:{en:['Sea Salt','White Tea','Jasmine','Musk'],ar:['ملح بحري','شاي أبيض','ياسمين','مسك']},bottleColor:'rgba(180,200,230,0.28)'},
-  {id:3,category:{en:'Oud · Rose',ar:'عود · ورد'},name:{en:'Malak Al Oud',ar:'ملك العود'},price:520,badge:{en:'Premium',ar:'بريميوم'},bio:{en:'The king of our collection. Malak Al Oud is an opulent tribute to the finest Arabian oud tradition — layered with Bulgarian rose, dark resins, and a base of pure agarwood.',ar:'ملك مجموعتنا. ملك العود هو تحية فاخرة لأرقى تقاليد العود العربي — طبقات من الورد البلغاري والراتنجات الداكنة.'},notes:{en:['Oud','Bulgarian Rose','Resin','Agarwood'],ar:['عود','ورد بلغاري','راتنج','خشب عود']},bottleColor:'rgba(100,55,15,0.45)'}
+  {id:1,category:{en:'Oriental · Woody',ar:'شرقي · خشبي'},name:{en:'Amber Nuit',ar:'عنبر نويت'},price:350,badge:{en:'Bestseller',ar:'الأكثر مبيعاً'},bio:{en:'A deeply sensual oriental composition that opens with the warmth of golden amber, journeys through precious sandalwood, and settles into a lingering trail of vanilla and soft smoke.',ar:'تركيبة شرقية حسية عميقة تنفتح بدفء العنبر الذهبي، وتمر عبر خشب الصندل الثمين، لتستقر في ذيل من الفانيليا والدخان الناعم.'},notes:{en:['Amber','Sandalwood','Vanilla','Smoke'],ar:['عنبر','صندل','فانيليا','دخان']},specs:{en:[['Size','100 ml'],['Concentration','EDP'],['Gender','Unisex']],ar:[['الحجم','١٠٠ مل'],['التركيز','EDP'],['الجنس','للجنسين']]},bottleColor:'rgba(180,120,30,0.35)'},
+  {id:2,category:{en:'Fresh · Floral',ar:'منعش · زهري'},name:{en:'Brise Blanc',ar:'بريز بلان'},price:280,badge:null,bio:{en:'A breath of fresh air captured in a bottle. Brise Blanc combines the freshness of an ocean breeze with delicate white florals and a clean, soft musk base.',ar:'نفس من الهواء المنعش محبوس في زجاجة. يجمع بريز بلان بين انتعاش نسيم المحيط وأزهار بيضاء رقيقة.'},notes:{en:['Sea Salt','White Tea','Jasmine','Musk'],ar:['ملح بحري','شاي أبيض','ياسمين','مسك']},specs:{en:[['Size','75 ml'],['Concentration','EDT'],['Gender','Feminine']],ar:[['الحجم','٧٥ مل'],['التركيز','EDT'],['الجنس','نسائي']]},bottleColor:'rgba(180,200,230,0.28)'},
+  {id:3,category:{en:'Oud · Rose',ar:'عود · ورد'},name:{en:'Malak Al Oud',ar:'ملك العود'},price:520,badge:{en:'Premium',ar:'بريميوم'},bio:{en:'The king of our collection. Malak Al Oud is an opulent tribute to the finest Arabian oud tradition — layered with Bulgarian rose, dark resins, and a base of pure agarwood.',ar:'ملك مجموعتنا. ملك العود هو تحية فاخرة لأرقى تقاليد العود العربي — طبقات من الورد البلغاري والراتنجات الداكنة.'},notes:{en:['Oud','Bulgarian Rose','Resin','Agarwood'],ar:['عود','ورد بلغاري','راتنج','خشب عود']},specs:{en:[['Size','100 ml'],['Concentration','Parfum'],['Gender','Unisex']],ar:[['الحجم','١٠٠ مل'],['التركيز','برفان'],['الجنس','للجنسين']]},bottleColor:'rgba(100,55,15,0.45)'}
 ];
 
 const faqs = [
   {q:{en:'Are all your fragrances 100% authentic?',ar:'هل جميع عطوركم أصلية 100%؟'},a:{en:'Yes, absolutely. Every fragrance is sourced directly from authorized distributors.',ar:'نعم، بالتأكيد. كل عطر مصدره موزعون معتمدون.'}},
-  {q:{en:'How do I place an order?',ar:'كيف أقدم طلباً؟'},a:{en:'Click "View Details" on any product or send us a message on Instagram @lamohperfumes.',ar:'انقر على "عرض التفاصيل" أو أرسل لنا رسالة على إنستغرام.'}},
+  {q:{en:'How do I place an order?',ar:'كيف أقدم طلباً؟'},a:{en:'Click "View Details" on any product, then click "Buy on WhatsApp" to order.',ar:'انقر على "عرض التفاصيل" ثم "اشتر عبر واتساب".'}},
   {q:{en:'Do you deliver across the UAE?',ar:'هل توصلون في جميع أنحاء الإمارات؟'},a:{en:'Yes! Dubai: 1–2 days, Abu Dhabi & Sharjah: 2–3 days, Other Emirates: 3–5 days.',ar:'نعم! دبي: ١–٢ يوم، أبوظبي والشارقة: ٢–٣ أيام، بقية الإمارات: ٣–٥ أيام.'}},
   {q:{en:'What payment methods do you accept?',ar:'ما طرق الدفع المقبولة؟'},a:{en:'We accept bank transfer, cash on delivery, and PayPal/Wise upon request.',ar:'نقبل التحويل البنكي، والدفع عند الاستلام، وباي بال/وايز عند الطلب.'}},
   {q:{en:'Can I return or exchange a fragrance?',ar:'هل يمكنني إرجاع أو استبدال عطر؟'},a:{en:'Unopened items can be exchanged within 3 days. We do not accept returns on opened products.',ar:'يمكن استبدال المنتجات غير المفتوحة خلال ٣ أيام. لا نقبل إرجاع المنتجات المفتوحة.'}}
@@ -644,19 +705,23 @@ function showPage(name) {
   closeMobileMenu();
 }
 
-function bottleHTML(color) {
-  return `<div class="bottle"><div class="b-cap" style="width:38px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.2));border:1px solid rgba(201,169,110,0.2);"></div><div class="b-neck" style="width:26px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.15));border:1px solid rgba(201,169,110,0.15);"></div><div class="b-body" style="width:68px;height:120px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.1),${color});border:1px solid rgba(201,169,110,0.18);"></div></div><div class="bottle-glow"></div>`;
+function goBackFromDetail() {
+  showPage(detailFromPage);
 }
 
-function productCardHTML(p, L) {
-  return `<div class="product-card"><div class="product-img-wrap">${bottleHTML(p.bottleColor)}${p.badge?`<span class="product-badge">${p.badge[L]}</span>`:''}</div><div class="product-body"><p class="product-cat">${p.category[L]}</p><h3 class="product-name">${p.name[L]}</h3><p class="product-desc">${p.bio[L].substring(0,90)}...</p><div class="product-notes">${p.notes[L].map(n=>`<span class="note">${n}</span>`).join('')}</div><div class="product-footer"><div class="product-price">${p.price}<sup>AED</sup></div><button class="view-btn" onclick="buyWhatsApp(${p.id})">${L==='ar'?'عرض التفاصيل':'View Details'}</button></div></div></div>`;
+function bottleHTML(color) {
+  return `<div class="bottle"><div class="b-cap" style="width:40px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.2));border:1px solid rgba(201,169,110,0.2);"></div><div class="b-neck" style="width:28px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.15));border:1px solid rgba(201,169,110,0.15);"></div><div class="b-body" style="width:72px;height:130px;background:linear-gradient(135deg,${color},rgba(0,0,0,0.1),${color});border:1px solid rgba(201,169,110,0.18);"></div></div><div class="bottle-glow"></div>`;
+}
+
+function productCardHTML(p, L, from) {
+  return `<div class="product-card"><div class="product-img-wrap">${bottleHTML(p.bottleColor)}${p.badge?`<span class="product-badge">${p.badge[L]}</span>`:''}</div><div class="product-body"><p class="product-cat">${p.category[L]}</p><h3 class="product-name">${p.name[L]}</h3><p class="product-desc">${p.bio[L].substring(0,100)}...</p><div class="product-notes">${p.notes[L].map(n=>`<span class="note">${n}</span>`).join('')}</div><div class="product-footer"><div class="product-price">${p.price}<sup>AED</sup></div><button class="view-btn" onclick="openDetail(${p.id},'${from||'home'}')">${L==='ar'?'عرض التفاصيل':'View Details'}</button></div></div></div>`;
 }
 
 function renderProducts(filter='') {
   const L = currentLang;
   const filtered = products.filter(p =>p.name[L].toLowerCase().includes(filter.toLowerCase())||p.category[L].toLowerCase().includes(filter.toLowerCase())||p.notes[L].some(n=>n.toLowerCase().includes(filter.toLowerCase())));
   document.getElementById('noResults').style.display = filtered.length===0?'block':'none';
-  document.getElementById('productsGrid').innerHTML = filtered.map(p=>productCardHTML(p,L)).join('');
+  document.getElementById('productsGrid').innerHTML = filtered.map(p=>productCardHTML(p,L,'home')).join('');
 }
 
 function homeSearchFn() {
@@ -682,10 +747,20 @@ function mobileSearchFn() {
   }, 100);
 }
 
-function buyWhatsApp(id) {
+function openDetail(id, fromPage) {
+  detailFromPage = fromPage || 'home';
   const p = products.find(x=>x.id===id);
+  const L = currentLang;
+  document.getElementById('detailCat').textContent = p.category[L];
+  document.getElementById('detailName').textContent = p.name[L];
+  document.getElementById('detailPrice').innerHTML = `${p.price}<sup>AED</sup>`;
+  document.getElementById('detailBio').textContent = p.bio[L];
+  document.getElementById('detailNotes').innerHTML = p.notes[L].map(n=>`<span class="note">${n}</span>`).join('');
+  document.getElementById('detailSpecs').innerHTML = p.specs[L].map(([k,v])=>`<div class="spec-row"><span class="spec-key">${k}</span><span class="spec-val">${v}</span></div>`).join('');
   const msg = encodeURIComponent(`Hello! I'm interested in ordering: ${p.name.en} (${p.price} AED).`);
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
+  document.getElementById('detailWhatsApp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+  document.getElementById('detailBottle').innerHTML = bottleHTML(p.bottleColor);
+  showPage('detail');
 }
 
 function renderFAQ() {
