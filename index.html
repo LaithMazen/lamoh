@@ -415,12 +415,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:56px 48p
 </header>
 
 <!-- MOBILE MENU -->
- <div class="search-section">
-      <div class="search-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="searchInput" placeholder="Search fragrances..." data-en-placeholder="Search fragrances..." data-ar-placeholder="ابحث عن العطور..." oninput="filterProducts()">
-      </div>
-    </div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="mobileSearch" placeholder="Search..." oninput="mobileSearchFn()">
+  </div>
+
   <div class="mobile-nav">
     <a onclick="closeMobileMenu();scrollToSection('hero');" data-en="Home" data-ar="الرئيسية">Home</a>
     <a onclick="closeMobileMenu();scrollToSection('products');" data-en="Products" data-ar="المنتجات">Products</a>
